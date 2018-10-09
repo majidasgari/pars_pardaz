@@ -2,6 +2,8 @@ package ir.ac.iust.parspardaz.core.data
 
 data class Document(
         var originalText: String,
+        var title: String? = null,
+        var tokenized: Boolean = false,
         var sections: MutableList<Section> = mutableListOf()
 ) {
     fun forEach(action: (Section) -> kotlin.Unit) = sections.forEach(action)
@@ -17,4 +19,12 @@ data class Document(
     fun forEachTokens(action: (Token) -> kotlin.Unit) = sections.forEach {
         it.forEachTokens(action)
     }
+
+    override fun toString(): String {
+        return if (title != null)
+            "<document title=$title>\n${sections.joinToString("\n")}i\n</document>"
+        else
+            "<document>\n${sections.joinToString("\n")}\n</document>"
+    }
+
 }
